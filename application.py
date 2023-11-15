@@ -39,6 +39,23 @@ def decipher_text():
             print('Decryption stopped')
     pass
 
+def clear_all():
+    # This function clears the contents of all input boxes
+    input_text_encrypt.delete(1.0, tk.END)
+    key_entry_encrypt.delete(0, tk.END)
+    output_text_encrypt.delete(1.0, tk.END)
+    input_text_decrypt.delete(1.0, tk.END)
+    key_entry_decrypt.delete(0, tk.END)
+    output_text_decrypt.delete(1.0, tk.END)
+
+def open_help_window():
+    # This function opens a new window for help information
+    help_window = tk.Toplevel(root)
+    help_window.title("Help Information")
+
+    help_label = ttk.Label(help_window, text="This is the help information.\nYou can provide instructions and details about how to use the program.")
+    help_label.pack(padx=10, pady=10)
+
 # Create the main window
 root = tk.Tk()
 root.title("Text Encryption and Decryption")
@@ -71,7 +88,7 @@ generate_button_encrypt = ttk.Button(encryption_frame, text="Generate Cipher", c
 generate_button_encrypt.grid(row=3, column=0, padx=10, pady=10)
 
 # Create and configure the output frame for encryption
-output_frame_encrypt = ttk.LabelFrame(encryption_frame, text="Output")
+output_frame_encrypt = ttk.LabelFrame(encryption_frame, text="Output (Requires a Key and Input)")
 output_frame_encrypt.grid(row=4, column=0, padx=10, pady=10, sticky="ew")
 output_text_encrypt = tk.Text(output_frame_encrypt, width=40, height=6)
 output_text_encrypt.grid(row=0, column=0, padx=10, pady=10)
@@ -95,17 +112,25 @@ copy_key_button_decrypt = ttk.Button(key_frame_decrypt, text="Copy to Clipboard"
 copy_key_button_decrypt.grid(row=0, column=1, padx=10, pady=10)
 
 # Create the "Decipher" button for decryption
-decipher_button_decrypt = ttk.Button(key_frame_decrypt, text="Decipher", command=decipher_text)
-decipher_button_decrypt.grid(row=0, column=2, padx=10, pady=10)
+decipher_button_decrypt = ttk.Button(decryption_frame, text="Decipher", command=decipher_text)
+decipher_button_decrypt.grid(row=3, column=0, padx=10, pady=10)
 
 warning_label = ttk.Label(key_frame_decrypt, text="", foreground="red")
-warning_label.grid(row=1, column=0, columnspan=3, padx=10, pady=10)
+warning_label.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
 # Create and configure the output frame for decryption
-output_frame_decrypt = ttk.LabelFrame(decryption_frame, text="Output")
-output_frame_decrypt.grid(row=2, column=0, padx=10, pady=10, sticky="ew")
+output_frame_decrypt = ttk.LabelFrame(decryption_frame, text="Output (Requires a Key and Ciphertext)")
+output_frame_decrypt.grid(row=4, column=0, padx=10, pady=10, sticky="ew")
 output_text_decrypt = tk.Text(output_frame_decrypt, width=40, height=6)
-output_text_decrypt.grid(row=0, column=0, padx=10, pady=10)
+output_text_decrypt.grid(row=0, column=0, padx=10, pady=10) 
+
+# Create the help button
+help_button = ttk.Button(root, text="Help", command=open_help_window)
+help_button.grid(row=1, column=0, padx=10, pady=10, sticky="w")
+
+# Create the "Clear All" button
+clear_all_button = ttk.Button(root, text="Clear All", command=clear_all)
+clear_all_button.grid(row=1, column=1, padx=10, pady=10, sticky="e")
 
 # Use grid weights to make the frames expand with the window
 root.grid_columnconfigure(0, weight=1)
